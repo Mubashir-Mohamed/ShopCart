@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Shopping.com Signup</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="signup.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Shopping.com</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon glyphicon-user">Login</span></a></li>
+            </ul>
+        </div>
+    </nav>
+    <h3>SignUp</h3>
+    <div id="signup" class="col-sm-12 formcss" align="center">
+        <form method="POST">
+
+            <div class="col-sm-4">
+                FULLNAME:<input class="form-control" type="text" name="name" id="name" placeholder="enter full name">
+            </div>
+
+            <div class="col-sm-4">
+                USERNAME:<input class="form-control" type="text" name="Username" id="uname" placeholder="enter username">
+            </div>
+
+            <div class="col-sm-4">
+                PASSWORD:<input class="form-control" type="password" name="password" id="upass" placeholder="password">
+            </div>
+
+            <div class="col-sm-4 buttoncss" align="center">
+                <button id="subid">Submit</button>
+            </div>
+        </form>
+
+
+</body>
+<script>
+    var btn = document.getElementById("subid");
+    btn.onclick = function() {
+        var name = document.getElementById("name").value;
+        console.log(name);
+        var username = document.getElementById("uname").value;
+        console.log(username);
+        var password = document.getElementById("upass").value;
+        console.log(password);
+        var to_send = {
+            
+            "username": username,
+            "password": password,
+		"name": name
+        }
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var serv_res = JSON.parse(xhttp.responseText);
+                if(serv_res.message == "success"){
+			window.location = "/login";	
+		}
+
+            }
+        }
+        xhttp.open("POST", "/api/signup");
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.send(JSON.stringify(to_send));
+
+
+    }
+</script>
+
+
+</html>
